@@ -63,12 +63,19 @@ d3.json("data.json", function(error, graph) {
 
   var nodeMap = {};
     graph.nodes.forEach(function(x) { nodeMap[x.name] = x; });
+
+    graph.nolink.forEach(function(x) { 
+        x.target = x.source;
+        graph.links.push(x);
+    });
+
     graph.links = graph.links.map(function(x) {
       return {
         source: nodeMap[x.source],
         target: nodeMap[x.target],
         value: x.value
       };
+
     });
 
   sankey

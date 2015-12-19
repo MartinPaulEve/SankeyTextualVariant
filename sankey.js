@@ -84,12 +84,22 @@ d3.sankey = function() {
       node.targetLinks = [];
     });
     links.forEach(function(link) {
+      if (link.source == null)
+      {
+        alert (link.toSource());
+      }
       var source = link.source,
           target = link.target;
       if (typeof source === "number") source = link.source = nodes[link.source];
       if (typeof target === "number") target = link.target = nodes[link.target];
-      source.sourceLinks.push(link);
-      target.targetLinks.push(link);
+      if (target != source) {
+        source.sourceLinks.push(link);
+        target.targetLinks.push(link);
+      }
+      else {
+        // This is a nolink entry
+        // TODO: add this to a separate list and process
+      }
     });
   }
 

@@ -68,7 +68,6 @@
 ],
 "links":[
 {"source":"PQ1 -> PR3","target":"EQ1 -> ER3","value":6},
-
 {"source":"PQ5 -> PR5","target":"EQ1 -> ER3","value":2},
 {"source":"PQ6 -> PR6","target":"EQ6 -> ER6","value":2},
 {"source":"PQ7 -> PR7","target":"EQ4 -> ER4","value":2},
@@ -107,4 +106,7 @@
 {"source":"PQ61 -> PR62","target":"EQ47 -> ER48","value":4},
 {"source":"PQ61 -> PR62","target":"EQ49 -> ER49","value":2},
 {"source":"PQ63 -> PR73","target":"EQ50 -> ER60","value":20}
+],
+"nolink":[
+{"source":"PQ4 -> PR4","location":"left","value":2}
 ]}
