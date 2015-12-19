@@ -5,6 +5,7 @@ d3.sankey = function() {
       size = [1, 1],
       nodes = [],
       links = [];
+      nolinks = [];
 
   sankey.nodeWidth = function(_) {
     if (!arguments.length) return nodeWidth;
@@ -54,6 +55,7 @@ d3.sankey = function() {
     var curvature = .5;
 
     function link(d) {
+      if (d.target != null) {
       var x0 = d.source.x + d.source.dx,
           x1 = d.target.x,
           xi = d3.interpolateNumber(x0, x1),
@@ -65,6 +67,7 @@ d3.sankey = function() {
            + "C" + x2 + "," + y0
            + " " + x3 + "," + y1
            + " " + x1 + "," + y1;
+    }
     }
 
     link.curvature = function(_) {
@@ -84,21 +87,21 @@ d3.sankey = function() {
       node.targetLinks = [];
     });
     links.forEach(function(link) {
-      if (link.source == null)
-      {
-        alert (link.toSource());
-      }
+      
       var source = link.source,
           target = link.target;
-      if (typeof source === "number") source = link.source = nodes[link.source];
-      if (typeof target === "number") target = link.target = nodes[link.target];
-      if (target != source) {
+      
+      if (link.target != null) {
+        if (typeof source === "number") source = link.source = nodes[link.source];
+        if (typeof target === "number") target = link.target = nodes[link.target];
+          
         source.sourceLinks.push(link);
         target.targetLinks.push(link);
       }
       else {
         // This is a nolink entry
         // TODO: add this to a separate list and process
+        nolinks.push(link);
       }
     });
   }
@@ -110,6 +113,16 @@ d3.sankey = function() {
         d3.sum(node.sourceLinks, value),
         d3.sum(node.targetLinks, value)
       );
+
+      if (node.value == 0){
+        // this is a node that should not be linked
+        // assign the nolink value to this node
+        nolinks.forEach(function(link) {
+            if (link.source == node) {
+                node.value = link.value;
+            }
+        });
+      }
     });
   }
 
@@ -152,9 +165,19 @@ d3.sankey = function() {
     nodes.forEach(function(node) {
       if (!node.sourceLinks.length) {
         node.x = x - 1;
-      }
-    });
-  }
+
+        nolinks.forEach(function(link) {
+          if (link.source == node) {
+            if (link.location == 0) {
+                node.x = 0;
+            } else {
+                node.x = 1;
+            }
+          }
+        });
+    }
+  });
+}
 
   function scaleNodeBreadths(kx) {
     nodes.forEach(function(node) {

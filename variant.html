@@ -65,7 +65,7 @@ d3.json("data.json", function(error, graph) {
     graph.nodes.forEach(function(x) { nodeMap[x.name] = x; });
 
     graph.nolink.forEach(function(x) { 
-        x.target = x.source;
+        x.target = "nolink";
         graph.links.push(x);
     });
 
@@ -73,7 +73,8 @@ d3.json("data.json", function(error, graph) {
       return {
         source: nodeMap[x.source],
         target: nodeMap[x.target],
-        value: x.value
+        value: x.value,
+        location: x.location
       };
 
     });
@@ -93,10 +94,16 @@ d3.json("data.json", function(error, graph) {
       .sort(function(a, b) { return b.dy - a.dy; });
 
 // add the link titles
+  if (link.target != null) {
   link.append("title")
         .text(function(d) {
             return d.source.name + " → " + 
                 d.target.name + "\n" + format(d.value); });
+  } else {
+  link.append("title")
+        .text(function(d) {
+            return d.source.name + "\n" + format(d.value); });
+  }
 
 // add in the nodes
   var node = svg.append("g").selectAll(".node")
