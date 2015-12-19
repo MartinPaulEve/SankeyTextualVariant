@@ -16,7 +16,7 @@
 .link {
   fill: none;
   stroke: #000;
-  stroke-opacity: .2;
+  stroke-opacity: .5;
 }
 .link:hover {
   stroke-opacity: .5;
@@ -36,7 +36,7 @@ var units = "Widgets";
 
 var margin = {top: 10, right: 10, bottom: 10, left: 10},
     width = 1500 - margin.left - margin.right,
-    height = 2000 - margin.top - margin.bottom;
+    height = 2500 - margin.top - margin.bottom;
 
 var formatNumber = d3.format(",.0f"),    // zero decimal places
     format = function(d) { return formatNumber(d) + " " + units; },
@@ -53,7 +53,7 @@ var svg = d3.select("#chart").append("svg")
 // Set the sankey diagram properties
 var sankey = d3.sankey()
     .nodeWidth(36)
-    .nodePadding(40)
+    .nodePadding(10)
     .size([width, height]);
 
 var path = sankey.link();
