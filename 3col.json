@@ -8,7 +8,8 @@
 {"name":"Node1Col1"},
 
 {"name":"Node0Col2"},
-{"name":"Node1Col2"}
+{"name":"Node1Col2"},
+{"name":"NodeNoLinkCol2"}
 
 ],
 "links":[
@@ -20,5 +21,6 @@
 
 ],
 "nolink":[
-{"source":"NodeNoLinkCol0","location":0,"value":6}
+{"source":"NodeNoLinkCol0","location":0,"value":6},
+{"source":"NodeNoLinkCol2","location":2,"value":6}
 ]}

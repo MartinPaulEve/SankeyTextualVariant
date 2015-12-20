@@ -100,7 +100,6 @@ d3.sankey = function() {
       }
       else {
         // This is a nolink entry
-        // TODO: add this to a separate list and process
         nolinks.push(link);
       }
     });
@@ -171,7 +170,7 @@ d3.sankey = function() {
             if (link.location == 0) {
                 node.x = 0;
             } else {
-                node.x = 1;
+                node.x = link.location;
             }
           }
         });
